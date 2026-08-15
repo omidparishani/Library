@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Book {
+  id          String   @id @default(cuid())
+  title       String
+  author      String?
+  borrowedAt  DateTime @default(now())
+  returnedAt  DateTime?
+  notes       String?
+  isRead      Boolean  @default(false)
+  rating      Int?     // 1-5
+  tags        String[] @default([])
+  weekNumber  Int
+  year        Int
+  images      Image[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([borrowedAt])
+  @@index([year, weekNumber])
+  @@index([isRead])
+}
+
+model Image {
+  id        String   @id @default(cuid())
+  url       String
+  publicId  String
+  bookId    String
+  book      Book     @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+}

@@ -1,0 +1,102 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #fef9f3;
+  --foreground: #2d3436;
+  --primary: #74b9ff;
+  --primary-dark: #0984e3;
+  --secondary: #fd79a8;
+  --accent: #ffeaa7;
+  --success: #55efc4;
+  --card: #ffffff;
+  --muted: #dfe6e9;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-dark: var(--primary-dark);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-success: var(--success);
+  --color-card: var(--card);
+  --color-muted: var(--muted);
+  --font-sans: var(--font-vazirmatn), system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: linear-gradient(135deg, #fef9f3 0%, #e8f4f8 50%, #fff5f7 100%);
+  min-height: 100vh;
+  color: var(--foreground);
+  font-family: var(--font-vazirmatn), system-ui, sans-serif;
+}
+
+/* Soft scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: #74b9ff;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #0984e3;
+}
+
+/* Fun button styles */
+.btn-primary {
+  @apply bg-gradient-to-r from-sky-400 to-blue-500 text-white font-bold py-3 px-6 rounded-2xl shadow-lg 
+         hover:from-sky-500 hover:to-blue-600 active:scale-95 transition-all duration-200 
+         disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+.btn-secondary {
+  @apply bg-gradient-to-r from-pink-400 to-rose-400 text-white font-bold py-3 px-6 rounded-2xl shadow-lg 
+         hover:from-pink-500 hover:to-rose-500 active:scale-95 transition-all duration-200;
+}
+
+.btn-success {
+  @apply bg-gradient-to-r from-emerald-400 to-teal-400 text-white font-bold py-3 px-6 rounded-2xl shadow-lg 
+         hover:from-emerald-500 hover:to-teal-500 active:scale-95 transition-all duration-200;
+}
+
+.card {
+  @apply bg-white/90 backdrop-blur-sm rounded-3xl shadow-xl border border-white/50 p-5;
+}
+
+/* Floating animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes pop {
+  0% { transform: scale(0.8); opacity: 0; }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.animate-pop {
+  animation: pop 0.4s ease-out;
+}
+
+/* Star rating */
+.star {
+  @apply text-2xl cursor-pointer transition-transform hover:scale-125;
+}
