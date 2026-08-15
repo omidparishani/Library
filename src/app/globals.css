@@ -10,6 +10,20 @@
   --success: #55efc4;
   --card: #ffffff;
   --muted: #dfe6e9;
+  --border: #e2e8f0;
+}
+
+.dark {
+  --background: #0f172a;
+  --foreground: #e2e8f0;
+  --primary: #38bdf8;
+  --primary-dark: #0ea5e9;
+  --secondary: #f472b6;
+  --accent: #fbbf24;
+  --success: #34d399;
+  --card: #1e293b;
+  --muted: #334155;
+  --border: #334155;
 }
 
 @theme inline {
@@ -22,6 +36,7 @@
   --color-success: var(--success);
   --color-card: var(--card);
   --color-muted: var(--muted);
+  --color-border: var(--border);
   --font-sans: var(--font-vazirmatn), system-ui, sans-serif;
 }
 
@@ -30,30 +45,26 @@
 }
 
 body {
-  background: linear-gradient(135deg, #fef9f3 0%, #e8f4f8 50%, #fff5f7 100%);
+  background: var(--background);
   min-height: 100vh;
   color: var(--foreground);
   font-family: var(--font-vazirmatn), system-ui, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Soft scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: var(--muted);
   border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb {
-  background: #74b9ff;
+  background: var(--primary);
   border-radius: 10px;
 }
-::-webkit-scrollbar-thumb:hover {
-  background: #0984e3;
-}
 
-/* Fun button styles */
 .btn-primary {
   @apply bg-gradient-to-r from-sky-400 to-blue-500 text-white font-bold py-3 px-6 rounded-2xl shadow-lg 
          hover:from-sky-500 hover:to-blue-600 active:scale-95 transition-all duration-200 
@@ -71,10 +82,9 @@ body {
 }
 
 .card {
-  @apply bg-white/90 backdrop-blur-sm rounded-3xl shadow-xl border border-white/50 p-5;
+  @apply bg-[var(--card)] backdrop-blur-sm rounded-3xl shadow-xl border border-[var(--border)] p-5 transition-colors;
 }
 
-/* Floating animation */
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-8px); }
@@ -92,9 +102,4 @@ body {
 
 .animate-pop {
   animation: pop 0.4s ease-out;
-}
-
-/* Star rating */
-.star {
-  @apply text-2xl cursor-pointer transition-transform hover:scale-125;
 }

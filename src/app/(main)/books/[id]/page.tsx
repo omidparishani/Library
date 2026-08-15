@@ -7,7 +7,7 @@ import Link from "next/link";
 import StarRating from "@/components/StarRating";
 import { formatPersianDate, TAGS } from "@/lib/utils";
 import { cn } from "@/lib/utils";
-import { ArrowRight, Trash2, BookOpen, BookX } from "lucide-react";
+import { ArrowRight, Trash2, BookOpen, BookX, Pencil } from "lucide-react";
 import toast from "react-hot-toast";
 
 export default function BookDetailPage() {
@@ -85,16 +85,24 @@ export default function BookDetailPage() {
   return (
     <div className="max-w-2xl mx-auto space-y-6">
       <div className="flex items-center justify-between">
-        <Link href="/books" className="flex items-center gap-2 text-sky-600 hover:underline">
+        <Link href="/books" className="flex items-center gap-2 text-sky-600 dark:text-sky-400 hover:underline">
           <ArrowRight size={20} />
           برگشت
         </Link>
-        <button
-          onClick={handleDelete}
-          className="p-2 text-red-400 hover:bg-red-50 rounded-xl transition"
-        >
-          <Trash2 size={20} />
-        </button>
+        <div className="flex items-center gap-2">
+          <Link
+            href={`/books/${id}/edit`}
+            className="p-2 text-sky-500 hover:bg-sky-50 dark:hover:bg-slate-800 rounded-xl transition"
+          >
+            <Pencil size={20} />
+          </Link>
+          <button
+            onClick={handleDelete}
+            className="p-2 text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition"
+          >
+            <Trash2 size={20} />
+          </button>
+        </div>
       </div>
 
       {/* Cover */}
