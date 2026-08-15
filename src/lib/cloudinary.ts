@@ -9,9 +9,9 @@ cloudinary.config({
 
 export default cloudinary;
 
-export async function uploadImage(file: File | Buffer, folder = "hossein-library") {
-  const bytes = file instanceof File ? await file.arrayBuffer() : file;
-  const buffer = Buffer.from(bytes);
+export async function uploadImage(file: File, folder = "hossein-library") {
+  const bytes = await file.arrayBuffer();
+  const buffer = Buffer.from(new Uint8Array(bytes));
 
   return new Promise<{ url: string; publicId: string }>((resolve, reject) => {
     cloudinary.uploader

@@ -1,14 +1,7 @@
 import type { Metadata } from "next";
-import { Vazirmatn } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import { ThemeProvider } from "@/components/ThemeProvider";
-
-const vazirmatn = Vazirmatn({
-  variable: "--font-vazirmatn",
-  subsets: ["arabic"],
-  weight: ["400", "500", "600", "700", "800"],
-});
 
 export const metadata: Metadata = {
   title: "کتابخانه حسین | Hossein's Reading Library",
@@ -21,8 +14,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fa" dir="rtl" className={`${vazirmatn.variable} h-full`} suppressHydrationWarning>
-      <body className="min-h-full flex flex-col font-sans bg-background text-foreground transition-colors duration-300">
+    <html lang="fa" dir="rtl" className="h-full" suppressHydrationWarning>
+      <head>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body
+        className="min-h-full flex flex-col font-sans bg-background text-foreground transition-colors duration-300"
+        style={{ fontFamily: "Vazirmatn, system-ui, sans-serif" }}
+      >
         <ThemeProvider>
           {children}
           <Toaster
@@ -32,15 +34,9 @@ export default function RootLayout({
                 borderRadius: "16px",
                 background: "var(--card)",
                 color: "var(--foreground)",
-                fontFamily: "var(--font-vazirmatn)",
+                fontFamily: "Vazirmatn, system-ui, sans-serif",
                 fontSize: "15px",
                 padding: "12px 20px",
-              },
-              success: {
-                iconTheme: { primary: "#55efc4", secondary: "#fff" },
-              },
-              error: {
-                iconTheme: { primary: "#ff7675", secondary: "#fff" },
               },
             }}
           />
