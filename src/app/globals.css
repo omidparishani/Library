@@ -14,9 +14,10 @@
   --muted-foreground: #64748b;
 }
 
+html.dark,
 .dark {
   --background: #0f172a;
-  --foreground: #f1f5f9;
+  --foreground: #f8fafc;
   --primary: #38bdf8;
   --primary-dark: #0ea5e9;
   --secondary: #f472b6;
@@ -24,8 +25,9 @@
   --success: #34d399;
   --card: #1e293b;
   --muted: #334155;
-  --border: #334155;
+  --border: #475569;
   --muted-foreground: #94a3b8;
+  color-scheme: dark;
 }
 
 @theme inline {
@@ -40,7 +42,7 @@
   --color-muted: var(--muted);
   --color-border: var(--border);
   --color-muted-foreground: var(--muted-foreground);
-  --font-sans: "Vazirmatn", system-ui, sans-serif;
+  --font-sans: "Vazirmatn", Tahoma, system-ui, sans-serif;
 }
 
 * {
@@ -48,47 +50,118 @@
 }
 
 html {
-  color-scheme: light dark;
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
 }
 
 body {
-  background: var(--background);
+  background: var(--background) !important;
   min-height: 100vh;
-  color: var(--foreground);
-  font-family: "Vazirmatn", system-ui, sans-serif;
+  color: var(--foreground) !important;
+  font-family: "Vazirmatn", Tahoma, system-ui, sans-serif;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Ensure text inherits properly in dark mode */
-.dark body,
-.dark {
-  color: var(--foreground);
+/* ========== Dark mode text fixes ========== */
+html.dark body,
+html.dark {
+  color: #f8fafc !important;
 }
 
-.dark h1, .dark h2, .dark h3, .dark h4, .dark p, .dark span, .dark label {
+html.dark h1,
+html.dark h2,
+html.dark h3,
+html.dark h4,
+html.dark h5,
+html.dark p,
+html.dark span,
+html.dark label,
+html.dark a,
+html.dark li,
+html.dark td,
+html.dark th {
   color: inherit;
 }
 
-.dark .text-gray-800 { color: #f1f5f9 !important; }
-.dark .text-gray-700 { color: #e2e8f0 !important; }
-.dark .text-gray-600 { color: #cbd5e1 !important; }
-.dark .text-gray-500 { color: #94a3b8 !important; }
-.dark .text-gray-400 { color: #64748b !important; }
-.dark .bg-white { background-color: var(--card) !important; }
-.dark .bg-gray-100 { background-color: var(--muted) !important; }
-.dark .border-gray-200 { border-color: var(--border) !important; }
+html.dark .text-gray-900,
+html.dark .text-gray-800 {
+  color: #f8fafc !important;
+}
+html.dark .text-gray-700 {
+  color: #e2e8f0 !important;
+}
+html.dark .text-gray-600 {
+  color: #cbd5e1 !important;
+}
+html.dark .text-gray-500 {
+  color: #94a3b8 !important;
+}
+html.dark .text-gray-400 {
+  color: #64748b !important;
+}
+html.dark .text-sky-700 {
+  color: #7dd3fc !important;
+}
+html.dark .text-sky-600 {
+  color: #38bdf8 !important;
+}
+html.dark .bg-white {
+  background-color: #1e293b !important;
+}
+html.dark .bg-gray-50,
+html.dark .bg-gray-100 {
+  background-color: #334155 !important;
+}
+html.dark .border-gray-100,
+html.dark .border-gray-200 {
+  border-color: #475569 !important;
+}
 
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+.card {
+  background-color: var(--card) !important;
+  color: var(--foreground) !important;
+  border: 1px solid var(--border);
+  border-radius: 1.5rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  padding: 1.25rem;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
-::-webkit-scrollbar-track {
-  background: var(--muted);
-  border-radius: 10px;
+
+input,
+textarea,
+select {
+  color: var(--foreground) !important;
+  background-color: var(--card) !important;
+  border-color: var(--border) !important;
 }
-::-webkit-scrollbar-thumb {
-  background: var(--primary);
-  border-radius: 10px;
+
+html.dark input,
+html.dark textarea,
+html.dark select {
+  color: #f8fafc !important;
+  background-color: #1e293b !important;
+  border-color: #475569 !important;
+}
+
+/* Date picker (rmdp) dark support */
+html.dark .rmdp-wrapper,
+html.dark .rmdp-calendar,
+html.dark .rmdp-day-picker,
+html.dark .rmdp-header {
+  background-color: #1e293b !important;
+  color: #f8fafc !important;
+}
+html.dark .rmdp-day:not(.rmdp-disabled):not(.rmdp-day-hidden) span {
+  color: #f8fafc !important;
+}
+html.dark .rmdp-week-day {
+  color: #94a3b8 !important;
+}
+html.dark .rmdp-arrow {
+  border-color: #38bdf8 !important;
 }
 
 .btn-primary {
@@ -107,29 +180,23 @@ body {
          hover:from-emerald-500 hover:to-teal-500 active:scale-95 transition-all duration-200;
 }
 
-.card {
-  background-color: var(--card);
-  color: var(--foreground);
-  @apply backdrop-blur-sm rounded-3xl shadow-xl border p-5 transition-colors;
-  border-color: var(--border);
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
 }
-
-input, textarea, select {
-  color: var(--foreground);
-  background-color: var(--card);
+::-webkit-scrollbar-track {
+  background: var(--muted);
+  border-radius: 10px;
 }
-
-.dark input, .dark textarea, .dark select {
-  color: #f1f5f9;
-  background-color: #1e293b;
-  border-color: #334155;
+::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 10px;
 }
 
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-8px); }
 }
-
 .animate-float {
   animation: float 3s ease-in-out infinite;
 }
@@ -139,7 +206,6 @@ input, textarea, select {
   50% { transform: scale(1.05); }
   100% { transform: scale(1); opacity: 1; }
 }
-
 .animate-pop {
   animation: pop 0.4s ease-out;
 }

@@ -71,6 +71,11 @@ export function AppSettingsProvider({ children }: { children: React.ReactNode })
         };
         setSettings(next);
         setTheme(next.theme);
+        if (typeof document !== "undefined") {
+          const root = document.documentElement;
+          if (next.theme === "dark") root.classList.add("dark");
+          else root.classList.remove("dark");
+        }
         applyBg(next.bgType, next.bgId, next.bgImage);
       } catch {
         // fallback local
@@ -86,7 +91,12 @@ export function AppSettingsProvider({ children }: { children: React.ReactNode })
     async (partial: Partial<AppSettings>) => {
       const next = { ...settings, ...partial };
       setSettings(next);
-      if (partial.theme) setTheme(partial.theme);
+      if (partial.theme) {
+        setTheme(partial.theme);
+        const root = document.documentElement;
+        if (partial.theme === "dark") root.classList.add("dark");
+        else root.classList.remove("dark");
+      }
       applyBg(next.bgType, next.bgId, next.bgImage);
 
       try {

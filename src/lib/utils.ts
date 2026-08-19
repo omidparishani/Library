@@ -12,26 +12,44 @@ export function getWeekInfo(date: Date = new Date()) {
   return { weekNumber, year };
 }
 
+/** نمایش تاریخ شمسی کامل مثل: ۱۲ فروردین ۱۴۰۳ */
 export function formatPersianDate(date: Date | string | null | undefined) {
   if (!date) return "—";
   const d = typeof date === "string" ? new Date(date) : date;
   if (isNaN(d.getTime())) return "—";
-  return new Intl.DateTimeFormat("fa-IR", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  }).format(d);
+  try {
+    return new Intl.DateTimeFormat("fa-IR-u-ca-persian", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    }).format(d);
+  } catch {
+    return new Intl.DateTimeFormat("fa-IR", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    }).format(d);
+  }
 }
 
+/** نمایش کوتاه شمسی مثل: ۱۴۰۳/۰۱/۱۲ */
 export function formatPersianDateShort(date: Date | string | null | undefined) {
   if (!date) return "—";
   const d = typeof date === "string" ? new Date(date) : date;
   if (isNaN(d.getTime())) return "—";
-  return new Intl.DateTimeFormat("fa-IR", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  }).format(d);
+  try {
+    return new Intl.DateTimeFormat("fa-IR-u-ca-persian", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    }).format(d);
+  } catch {
+    return new Intl.DateTimeFormat("fa-IR", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    }).format(d);
+  }
 }
 
 export function toInputDate(date: Date | string | null | undefined): string {
@@ -41,7 +59,7 @@ export function toInputDate(date: Date | string | null | undefined): string {
   return d.toISOString().slice(0, 10);
 }
 
-/** Default due date = borrowed + 7 days (typical library loan) */
+/** موعد پیش‌فرض = امانت + ۷ روز */
 export function defaultDueDate(from: Date = new Date()): string {
   const d = new Date(from);
   d.setDate(d.getDate() + 7);
