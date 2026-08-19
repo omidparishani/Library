@@ -8,22 +8,24 @@ datasource db {
 }
 
 model Book {
-  id          String   @id @default(cuid())
+  id          String    @id @default(cuid())
   title       String
   author      String?
-  borrowedAt  DateTime @default(now())
+  borrowedAt  DateTime  @default(now())
   returnedAt  DateTime?
+  dueDate     DateTime?
   notes       String?
-  isRead      Boolean  @default(false)
-  rating      Int?     // 1-5
-  tags        String[] @default([])
+  isRead      Boolean   @default(false)
+  rating      Int?
+  tags        String[]  @default([])
   weekNumber  Int
   year        Int
   images      Image[]
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 
   @@index([borrowedAt])
+  @@index([dueDate])
   @@index([year, weekNumber])
   @@index([isRead])
 }
@@ -35,4 +37,11 @@ model Image {
   bookId    String
   book      Book     @relation(fields: [bookId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
+}
+
+model Setting {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String
+  updatedAt DateTime @updatedAt
 }

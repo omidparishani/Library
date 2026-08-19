@@ -2,20 +2,21 @@
 
 :root {
   --background: #fef9f3;
-  --foreground: #2d3436;
-  --primary: #74b9ff;
-  --primary-dark: #0984e3;
-  --secondary: #fd79a8;
-  --accent: #ffeaa7;
-  --success: #55efc4;
+  --foreground: #1e293b;
+  --primary: #0ea5e9;
+  --primary-dark: #0284c7;
+  --secondary: #ec4899;
+  --accent: #fbbf24;
+  --success: #10b981;
   --card: #ffffff;
-  --muted: #dfe6e9;
+  --muted: #f1f5f9;
   --border: #e2e8f0;
+  --muted-foreground: #64748b;
 }
 
 .dark {
   --background: #0f172a;
-  --foreground: #e2e8f0;
+  --foreground: #f1f5f9;
   --primary: #38bdf8;
   --primary-dark: #0ea5e9;
   --secondary: #f472b6;
@@ -24,6 +25,7 @@
   --card: #1e293b;
   --muted: #334155;
   --border: #334155;
+  --muted-foreground: #94a3b8;
 }
 
 @theme inline {
@@ -37,20 +39,44 @@
   --color-card: var(--card);
   --color-muted: var(--muted);
   --color-border: var(--border);
-  --font-sans: var(--font-vazirmatn), system-ui, sans-serif;
+  --color-muted-foreground: var(--muted-foreground);
+  --font-sans: "Vazirmatn", system-ui, sans-serif;
 }
 
 * {
   box-sizing: border-box;
 }
 
+html {
+  color-scheme: light dark;
+}
+
 body {
   background: var(--background);
   min-height: 100vh;
   color: var(--foreground);
-  font-family: var(--font-vazirmatn), system-ui, sans-serif;
+  font-family: "Vazirmatn", system-ui, sans-serif;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
+
+/* Ensure text inherits properly in dark mode */
+.dark body,
+.dark {
+  color: var(--foreground);
+}
+
+.dark h1, .dark h2, .dark h3, .dark h4, .dark p, .dark span, .dark label {
+  color: inherit;
+}
+
+.dark .text-gray-800 { color: #f1f5f9 !important; }
+.dark .text-gray-700 { color: #e2e8f0 !important; }
+.dark .text-gray-600 { color: #cbd5e1 !important; }
+.dark .text-gray-500 { color: #94a3b8 !important; }
+.dark .text-gray-400 { color: #64748b !important; }
+.dark .bg-white { background-color: var(--card) !important; }
+.dark .bg-gray-100 { background-color: var(--muted) !important; }
+.dark .border-gray-200 { border-color: var(--border) !important; }
 
 ::-webkit-scrollbar {
   width: 8px;
@@ -82,7 +108,21 @@ body {
 }
 
 .card {
-  @apply bg-[var(--card)] backdrop-blur-sm rounded-3xl shadow-xl border border-[var(--border)] p-5 transition-colors;
+  background-color: var(--card);
+  color: var(--foreground);
+  @apply backdrop-blur-sm rounded-3xl shadow-xl border p-5 transition-colors;
+  border-color: var(--border);
+}
+
+input, textarea, select {
+  color: var(--foreground);
+  background-color: var(--card);
+}
+
+.dark input, .dark textarea, .dark select {
+  color: #f1f5f9;
+  background-color: #1e293b;
+  border-color: #334155;
 }
 
 @keyframes float {

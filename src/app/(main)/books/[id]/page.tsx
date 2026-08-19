@@ -131,6 +131,15 @@ export default function BookDetailPage() {
           <span className="bg-sky-100 text-sky-700 px-3 py-1 rounded-full">
             📅 امانت: {formatPersianDate(book.borrowedAt)}
           </span>
+          {book.dueDate && (
+            <span className={`px-3 py-1 rounded-full ${
+              !book.returnedAt && new Date(book.dueDate) <= new Date()
+                ? "bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300"
+                : "bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-200"
+            }`}>
+              ⏰ موعد پس‌دادن: {formatPersianDate(book.dueDate)}
+            </span>
+          )}
           {book.returnedAt && (
             <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full">
               🔙 برگشت: {formatPersianDate(book.returnedAt)}

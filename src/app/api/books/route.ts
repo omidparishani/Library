@@ -8,6 +8,7 @@ const bookSchema = z.object({
   author: z.string().optional().nullable(),
   borrowedAt: z.string().optional(),
   returnedAt: z.string().optional().nullable(),
+  dueDate: z.string().optional().nullable(),
   notes: z.string().optional().nullable(),
   isRead: z.boolean().default(false),
   rating: z.number().min(1).max(5).optional().nullable(),
@@ -30,6 +31,7 @@ export async function GET(req: NextRequest) {
     const isRead = searchParams.get("isRead");
     const tag = searchParams.get("tag");
     const search = searchParams.get("search");
+    const dueSoon = searchParams.get("dueSoon");
 
     const where: any = {};
 
@@ -48,6 +50,13 @@ export async function GET(req: NextRequest) {
       const start = new Date(parseInt(year), parseInt(month) - 1, 1);
       const end = new Date(parseInt(year), parseInt(month), 0, 23, 59, 59);
       where.borrowedAt = { gte: start, lte: end };
+    }
+    if (dueSoon === "true") {
+      const now = new Date();
+      const in3Days = new Date();
+      in3Days.setDate(in3Days.getDate() + 3);
+      where.dueDate = { gte: now, lte: in3Days };
+      where.returnedAt = null;
     }
 
     const books = await prisma.book.findMany({
@@ -77,6 +86,7 @@ export async function POST(req: NextRequest) {
         author: data.author,
         borrowedAt: date,
         returnedAt: data.returnedAt ? new Date(data.returnedAt) : null,
+        dueDate: data.dueDate ? new Date(data.dueDate) : null,
         notes: data.notes,
         isRead: data.isRead,
         rating: data.rating,

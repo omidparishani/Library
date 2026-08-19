@@ -8,6 +8,7 @@ const updateSchema = z.object({
   author: z.string().optional().nullable(),
   borrowedAt: z.string().optional(),
   returnedAt: z.string().optional().nullable(),
+  dueDate: z.string().optional().nullable(),
   notes: z.string().optional().nullable(),
   isRead: z.boolean().optional(),
   rating: z.number().min(1).max(5).optional().nullable(),
@@ -24,13 +25,11 @@ export async function GET(
       where: { id },
       include: { images: true },
     });
-
     if (!book) {
       return NextResponse.json({ error: "کتاب پیدا نشد" }, { status: 404 });
     }
-
     return NextResponse.json(book);
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: "خطا" }, { status: 500 });
   }
 }
@@ -55,6 +54,9 @@ export async function PATCH(
     if (data.returnedAt !== undefined) {
       updateData.returnedAt = data.returnedAt ? new Date(data.returnedAt) : null;
     }
+    if (data.dueDate !== undefined) {
+      updateData.dueDate = data.dueDate ? new Date(data.dueDate) : null;
+    }
 
     const book = await prisma.book.update({
       where: { id },
@@ -77,7 +79,7 @@ export async function DELETE(
     const { id } = await params;
     await prisma.book.delete({ where: { id } });
     return NextResponse.json({ success: true });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: "خطا در حذف" }, { status: 500 });
   }
 }
